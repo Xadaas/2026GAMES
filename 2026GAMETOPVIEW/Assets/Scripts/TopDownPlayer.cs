@@ -15,6 +15,8 @@ public class TopDownPlayer : MonoBehaviour
     private Sprite[] currentSprites;
     private int frameIndex = 0;
     private float frameTimer = 0f;
+
+    public DialogueBox dialogueBox;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,7 +29,8 @@ public class TopDownPlayer : MonoBehaviour
     }
     void Update()
     {
-        rb.linearVelocity = moveInput * moveSpeed;
+       
+            rb.linearVelocity = moveInput * moveSpeed;
         if (facingDir.y > 0) { currentSprites = upSprites; }
         else if (facingDir.y < 0) { currentSprites = downSprites; }
         else if (facingDir.x < 0) { currentSprites = leftSprites; }
@@ -40,6 +43,11 @@ public class TopDownPlayer : MonoBehaviour
                 frameTimer = frameTime;
                 frameIndex += 1;
                 if (frameIndex >= currentSprites.Length) { frameIndex = 0; }
+            }
+
+            if (dialogueBox.isOpen)
+            {
+                moveInput = Vector2.zero;
             }
         }
         else { frameIndex = 0; }
